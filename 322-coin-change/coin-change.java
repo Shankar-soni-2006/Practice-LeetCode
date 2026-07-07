@@ -26,6 +26,7 @@ class Solution {
         if (ans >= 100000000) {
             return -1;
         }
+        System.gc();
         return ans;
     }
 }
