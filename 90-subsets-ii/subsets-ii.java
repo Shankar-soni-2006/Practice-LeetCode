@@ -15,6 +15,7 @@ class Solution {
         List<Integer> temp = new ArrayList<>();
         Arrays.sort(nums);
         getSubset(0,temp,ans,nums);
+        System.gc();
         return ans;
     }
 }
