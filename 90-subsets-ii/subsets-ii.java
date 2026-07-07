@@ -1,14 +1,16 @@
 class Solution {
     public void getSubset(int idx, List<Integer> temp, List<List<Integer>> ans, int[] nums ){
-        if(idx == nums.length){
-            if(ans.contains(temp)) return;
-            ans.add(new ArrayList<>(temp));
-            return;
+        
+        ans.add(new ArrayList<>(temp));
+            
+        for(int i = idx; i < nums.length; i++){
+            if(i > idx && nums[i] == nums[i-1]) continue;
+            temp.add(nums[i]);
+            getSubset(i+1,temp, ans, nums);
+            temp.remove(temp.size()-1);
+        
         }
-        temp.add(nums[idx]);
-        getSubset(idx+1,temp, ans, nums);
-        temp.remove(temp.size()-1);
-        getSubset(idx+1,temp,ans, nums);
+       
     }
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> ans = new ArrayList<>();
