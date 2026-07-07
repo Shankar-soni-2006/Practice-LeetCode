@@ -14,7 +14,8 @@ class Solution {
         dp = new int[coins.length][amount+1];
         for(int[] x : dp) Arrays.fill(x,-1);
         Arrays.sort(coins);
-        return helper(coins, amount, coins.length - 1);
-        
+        int ans =helper(coins, amount, coins.length - 1);
+        System.gc();
+        return ans;
     }
 }
