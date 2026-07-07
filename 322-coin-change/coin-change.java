@@ -1,7 +1,6 @@
 class Solution {
     int[][] dp;
     public int helper(int[] coins, int amount, int idx) {
-        
         if (amount < 0) return 100000000; 
         if (idx == 0) {
             if (amount % coins[0] == 0) {
