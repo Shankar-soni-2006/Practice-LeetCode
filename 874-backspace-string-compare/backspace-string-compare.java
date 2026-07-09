@@ -14,10 +14,6 @@ class Solution {
         }
         
         if(a.size() != b.size()) return false;
-        StringBuilder as = new StringBuilder();
-        StringBuilder bt = new StringBuilder();
-        for(int c : a) as.append(c);
-        for(int c : b) bt.append(c);
-        return as.toString().equals(bt.toString());
+        return a.equals(b); 
     }
 }
