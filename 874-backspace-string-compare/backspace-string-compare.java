@@ -12,8 +12,6 @@ class Solution {
                 if(!b.isEmpty()) b.pop();
             }else b.push(t.charAt(i));
         }
-        
-        if(a.size() != b.size()) return false;
         return a.equals(b); 
     }
 }
