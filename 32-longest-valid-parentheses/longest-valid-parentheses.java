@@ -1,18 +1,22 @@
 class Solution {
     public int longestValidParentheses(String s) {
         int n = s.length();
-        if(n == 0) return 0;
-        int maxLen = 0;
+        int[] vis = new int[n];
         Stack<Integer> st = new Stack<>();
-        st.push(-1);
-        for(int i = 0;i < n; i++){
+        for(int i = 0; i < n; i++){
             if(s.charAt(i) == '(') st.push(i);
             else{
-                st.pop();
-                if(st.isEmpty()) st.push(i);
-                else maxLen = Math.max(maxLen,i-st.peek());
+                if(st.isEmpty()) continue;
+                vis[i] = 1;
+                vis[st.pop()] = 1;
             }
         }
-        return maxLen;
+        int count = 0, max = 0;
+        for(int i = 0; i < n; i++){
+            if(vis[i] == 1) count++;
+            else count = 0;
+            max = Math.max(count,max);
+        }
+        return max;
     }
 }
