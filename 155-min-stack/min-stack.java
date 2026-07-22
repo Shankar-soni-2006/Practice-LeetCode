@@ -1,32 +1,32 @@
-import java.util.ArrayList;
+import java.util.Stack;
 
 class MinStack {
-    ArrayList<Integer> st;
-    ArrayList<Integer> minSt;
+    Stack<Integer> st;
+    Stack<Integer> minst;
 
     public MinStack() {
-        this.st = new ArrayList<>();
-        this.minSt = new ArrayList<>();
+        this.st = new Stack<>();
+        this.minst = new Stack<>();
     }
-
+    
     public void push(int value) {
-        st.add(value);
-        if (minSt.isEmpty() || value <= minSt.get(minSt.size() - 1)) minSt.add(value);
-        
+        st.push(value);
+        if (minst.isEmpty() || value <= minst.peek())  minst.push(value);  
     }
-
+    
     public void pop() {
-        if (!st.isEmpty() &&st.get(st.size() - 1).equals(minSt.get(minSt.size() - 1))) minSt.remove(minSt.size() - 1);
-        st.remove(st.size() - 1);
+        if (st.isEmpty()) return;
+        if (st.peek().equals(minst.peek()))  minst.pop();
+        st.pop();    
     }
-
+    
     public int top() {
-        if (!st.isEmpty()) return st.get(st.size() - 1);
-        return -1;  
+        if (st.isEmpty()) return -1;
+        return st.peek();
     }
-
+    
     public int getMin() {
-        if (!minSt.isEmpty())  return minSt.get(minSt.size() - 1);
-        return -1;
+        if (minst.isEmpty()) return -1;
+        return minst.peek();
     }
 }
