@@ -8,15 +8,13 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+ // Floyd's Tortoise and Hare Algorithm
 class Solution {
     public ListNode middleNode(ListNode head) {
         ListNode fast = head, slow = head;
-        while(fast!= null){
-            fast = fast.next;
-            if(fast != null){
-                slow = slow.next;
-                fast = fast.next;
-            }
+        while(fast!= null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
         }
         return slow;
     }
