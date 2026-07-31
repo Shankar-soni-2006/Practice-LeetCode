@@ -8,7 +8,7 @@ class Solution {
         int idx = 0;
         for(int i = 0; i < n; i++){
             arr[idx].append(s.charAt(i));
-             if(idx == 0 || idx == numRows-1) flag = !flag;
+            if(idx == 0 || idx == numRows-1) flag = !flag;
             idx += (flag ? 1 : -1);
         }
         StringBuilder ans = new StringBuilder();
