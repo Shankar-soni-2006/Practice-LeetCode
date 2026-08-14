@@ -14,22 +14,13 @@
  * }
  */
 class Solution {
-    public void support(TreeNode root, List<String> ans, String sb){
-        if(root == null) return;
-       
-        if(root.left == null && root.right == null){
-           sb+=Integer.toString(root.val);
-           ans.add(sb);  
-        }
-        support(root.left, ans, sb+Integer.toString(root.val));
-        support(root.right, ans, sb+Integer.toString(root.val));
-        
+    public int helper(TreeNode root, int sum){
+        if(root == null) return 0;
+        sum=(sum*10)+root.val;
+        if(root.left == null && root.right == null) return sum;
+        return helper(root.left, sum) + helper(root.right, sum);
     }
     public int sumNumbers(TreeNode root) {
-        List<String> ans = new ArrayList<>();
-        support(root, ans, "");
-        int sum = 0;
-        for(String s : ans) sum+=(Integer.parseInt(s));
-        return sum;
+        return helper(root, 0);
     }
 }
