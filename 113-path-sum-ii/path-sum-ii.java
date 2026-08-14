@@ -24,10 +24,9 @@ class Solution {
             }
             temp.remove(temp.size()-1);
             return;
-        }else{
-           helper(root.left, targetSum, res, x, temp);
-           helper(root.right, targetSum, res, x, temp);
         }
+        helper(root.left, targetSum, res, x, temp);
+        helper(root.right, targetSum, res, x, temp);
         temp.remove(temp.size()-1);
     }
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
