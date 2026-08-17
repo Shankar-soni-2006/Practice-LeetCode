@@ -3,7 +3,8 @@ class Solution {
         if(mid == 0) return false;
         int cnt = 0;
         for(int i : q){
-            cnt+=((i+mid-1) / mid); 
+            // cnt+=((i+mid-1) / mid); 
+            cnt+=Math.ceil((double)i/mid);
         }
         return cnt <= k;
     }
