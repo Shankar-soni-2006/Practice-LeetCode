@@ -3,14 +3,14 @@ class Solution {
         long cnt = 0;
         for(int i : time){
             cnt += (mid/i);
-            if(cnt >= k) return true;
+            // if(cnt >= k) return true;
         }
         return cnt >= k;
     }
     public long minimumTime(int[] time, int k) {
         int n = time.length;
-        long l = 1, r = 0;
-        for(int x : time) r = Math.max(r, x);
+        long l = 1, r = time[0];
+        for(int x : time) r = Math.min(r, x);
         r = r * k;
         while(l <= r){
             long mid = l+(r-l)/2;
