@@ -2,9 +2,7 @@ class Solution {
     public boolean isChecker(int[] nums, int maxOp, int mid){
         long op = 0;
         for(int x : nums){
-            if(x > mid){
-                op+=(x-1)/mid;
-            } 
+            op += (long) Math.ceil((double) x / mid) - 1; 
         }
         return op <= maxOp;
     }
