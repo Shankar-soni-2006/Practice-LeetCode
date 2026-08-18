@@ -19,6 +19,6 @@ class Solution {
             if(l1 > r2) h = x-1;
             else l = x+1;
         }
-        return 0.0;    
+        return 0;    
     }
 }
