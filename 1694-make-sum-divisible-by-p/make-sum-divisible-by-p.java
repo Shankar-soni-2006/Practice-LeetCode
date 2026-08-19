@@ -7,11 +7,11 @@ class Solution {
         if (target == 0) return 0;
         HashMap<Integer, Integer> map = new HashMap<>();
         map.put(0, -1); 
-        long curr = 0;
+        totalSum = 0;
         int min = nums.length;
         for (int i = 0; i < nums.length; i++) {
-            curr += nums[i];
-            int mod = (int) (curr % p);
+            totalSum += nums[i];
+            int mod = (int) (totalSum % p);
             int reqMod = (mod- target+ p) % p;
             if (map.containsKey(reqMod)) {
                 min = Math.min(min, i - map.get(reqMod));
