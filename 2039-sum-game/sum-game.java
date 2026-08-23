@@ -1,15 +1,19 @@
 class Solution {
     public boolean sumGame(String num) {
-        int diff = 0, ql = 0, qr = 0;
         int n = num.length();
-        for(int i = 0; i < n/2; i++){
-            if(num.charAt(i) == '?') ql++;
-            else diff+=(num.charAt(i)-'0');
+        int sum = 0,qm = 0;
+        for(int i=0;i<n;i++){
+            char c = num.charAt(i);
+            int val = (c!='?')?c-'0':0;
+            if(i<n/2){
+                sum+=val;
+                if(c=='?') qm++;
+            }
+            else{
+                sum-=val;
+                if(c=='?') qm--;
+            }
         }
-        for(int i = n/2; i < n; i++){
-            if(num.charAt(i) == '?') qr++;
-            else diff-=(num.charAt(i)-'0');
-        }
-        return 2*diff != 9*(qr-ql);
+        return (2*sum+qm*9)!=0;
     }
 }
