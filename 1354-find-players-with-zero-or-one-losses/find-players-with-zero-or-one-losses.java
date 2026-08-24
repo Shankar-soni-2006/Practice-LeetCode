@@ -1,26 +1,21 @@
 class Solution {
     public List<List<Integer>> findWinners(int[][] matches) {
-        List<List<Integer>> res = new ArrayList<>();
-        HashMap<Integer, Integer> map = new HashMap<>();
-        Set<Integer> set = new HashSet<>();
-        for(int[] x : matches){
-            int w = x[0], l = x[1];
-            set.add(w);
-            set.add(l);
-            map.put(l, map.getOrDefault(l,0)+1);
+        List<List<Integer>> ans = new ArrayList<>();
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<matches.length;i++){
+            map.putIfAbsent(matches[i][0],0);
+            map.put(matches[i][1],map.getOrDefault(matches[i][1],0)+1);
         }
-        List<Integer> temp0 = new ArrayList<>();
-        List<Integer> temp1 = new ArrayList<>();
-        List<Integer> temp = new ArrayList<>(set);
-        Collections.sort(temp);    
-        for (int x : temp) {
-            if (!map.containsKey(x)) temp0.add(x);    
-            if (map.containsKey(x) && map.get(x) == 1) temp1.add(x);    
-        }
-        Collections.sort(temp0);
-        Collections.sort(temp1);
-        res.add(temp0);
-        res.add(temp1);
-        return res;
+        List<Integer> l0 = new ArrayList<>();
+        List<Integer> l1 = new ArrayList<>();
+        map.forEach((k,v)->{
+            if(v==0) l0.add(k);
+            else if(v==1) l1.add(k);
+        });
+        Collections.sort(l1);
+        Collections.sort(l0);
+        ans.add(l0);
+        ans.add(l1);
+        return ans;
     }
 }
