@@ -25,8 +25,7 @@
  */
 class Solution {
     public TreeNode helper(ListNode head, ListNode end) {
-        if (head == end)
-            return null;
+        if (head == end) return null;
         ListNode mid = findMid(head, end);
         TreeNode root = new TreeNode(mid.val);
         root.left = helper(head, mid);
@@ -45,10 +44,10 @@ class Solution {
     }
 
     public TreeNode sortedListToBST(ListNode head) {
-        ListNode end = head;
-        while (end != null) {
-            end = end.next;
-        }
-        return helper(head, end);
+        // ListNode end = head;
+        // while (end != null) {
+        //     end = end.next;
+        // }
+        return helper(head, null);
     }
 }
