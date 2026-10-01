@@ -14,15 +14,33 @@
  * }
  */
 class Solution {
-    public void in(TreeNode root, List<Integer> ans){
-        if(root == null) return;
-        in(root.left,ans);
-        ans.add(root.val);
-        in(root.right, ans);
+    static List<Integer> ans;
+    public List<Integer> morrisTraversal(TreeNode root){
+        if(root == null) return ans;
+        TreeNode curr = root;
+        while(curr != null){
+            if(curr.left == null){
+                ans.add(curr.val);
+                curr = curr.right;
+            }else{
+                TreeNode prev = curr.left;
+                while(prev.right != null && prev.right != curr) prev = prev.right;
+                if(prev.right == null){
+                    prev.right = curr;
+                    curr = curr.left;
+                }else{
+                    prev.right = null;
+                    ans.add(curr.val);
+                    curr = curr.right;
+                }
+            }
+        }
+        return ans;
     }
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
-        in(root, ans);
+        ans = new ArrayList<>();
+        if(root == null) return ans;
+        morrisTraversal(root);
         return ans;
     }
 }
