@@ -1,37 +1,36 @@
 class Solution {
-    public void topoSort(int V, int[][] edges, ArrayList<Integer> ans) {
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        for (int i = 0; i < V; i++) {
-            adj.add(new ArrayList<>());
-        }
-        int[] indegree = new int[V];
-        for (int[] edge : edges) {
-            int u = edge[0];
-            int v = edge[1];
-            adj.get(u).add(v);
-            indegree[v]++;
-        }
-        Queue<Integer> q = new ArrayDeque<>();
-        for (int i = 0; i < V; i++) {
-            if (indegree[i] == 0) {
-                q.add(i);
+    public boolean dfs(int st, ArrayList<ArrayList<Integer>> adj, int[] vis) {
+        vis[st] = 1;
+        for (int x : adj.get(st)) {
+            if (vis[x] == 1) {
+                return false;
             }
-        }
-        while (!q.isEmpty()) {
-            int top = q.poll();
-            ans.add(top);
-            for (int next : adj.get(top)) {
-                indegree[next]--;
-                if (indegree[next] == 0) {
-                    q.add(next);
+            if (vis[x] == 0) {
+                if (!dfs(x, adj, vis)) {
+                    return false;
                 }
             }
         }
+        vis[st] = 2;
+        return true;
     }
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        topoSort(numCourses, prerequisites, ans);
-        return ans.size() == numCourses;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            adj.add(new ArrayList<>());
+        }
+        for (int[] p : prerequisites) {
+            adj.get(p[1]).add(p[0]);
+        }
+        int[] vis = new int[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            if (vis[i] == 0) {
+                if (!dfs(i, adj, vis)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
