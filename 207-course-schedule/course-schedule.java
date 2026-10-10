@@ -2,9 +2,7 @@ class Solution {
     public boolean dfs(int st, ArrayList<ArrayList<Integer>> adj, int[] vis) {
         vis[st] = 1;
         for (int x : adj.get(st)) {
-            if (vis[x] == 1) {
-                return false;
-            }
+            if (vis[x] == 1) return false;
             if (vis[x] == 0) {
                 if (!dfs(x, adj, vis)) {
                     return false;
