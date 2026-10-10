@@ -14,7 +14,7 @@ class Solution {
         Queue<Integer> q = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
             if (in[i] == 0) {
-                q.offer(i);
+                q.add(i);
             }
         }
         while (!q.isEmpty()) {
@@ -23,13 +23,11 @@ class Solution {
             for (int v : adj.get(u)) {
                 pre[u][v] = true;
                 for (int i = 0; i < n; i++) {
-                    if (pre[i][u]) {
-                        pre[i][v] = true;
-                    }
+                    if (pre[i][u]) pre[i][v] = true;
                 }
                 in[v]--;
                 if (in[v] == 0) {
-                    q.offer(v);
+                    q.add(v);
                 }
             }
         }
