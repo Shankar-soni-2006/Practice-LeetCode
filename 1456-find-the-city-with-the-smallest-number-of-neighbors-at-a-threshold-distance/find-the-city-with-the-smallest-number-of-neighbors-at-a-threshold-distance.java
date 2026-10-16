@@ -1,6 +1,6 @@
 class Solution {
     public int[][] floydWarshall(int n, int[][] edges) {
-        int INF = 100000000;
+        int INF = 100000;
         int[][] dist = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -23,7 +23,6 @@ class Solution {
                 }
             }
         }
-
         return dist;
     }
 
