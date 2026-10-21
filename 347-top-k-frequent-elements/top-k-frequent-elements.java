@@ -5,11 +5,14 @@ class Solution {
         for(int i = 0; i < n; i++){
             map.put(nums[i], map.getOrDefault(nums[i], 0)+1);
         }
-        List<Integer> ls = new ArrayList<>(map.keySet());
-        Collections.sort(ls, (a, b) -> map.get(b).compareTo(map.get(a)));
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->map.get(a) - map.get(b));
+        for(int x : map.keySet()){
+            pq.add(x);
+            if(pq.size() > k) pq.poll();
+        }
         int[] ans = new int[k];
         for(int i = 0; i < k; i++){
-            ans[i] = ls.get(i);
+            ans[i] = pq.poll();
         }
         return ans;
     }
