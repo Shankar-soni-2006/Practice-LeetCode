@@ -1,45 +1,51 @@
-class Graph{
+class DSU {
     int n;
-    int[][] adj;
-
-    Graph(int n){
+    int[] par;
+    int[] size;
+    DSU(int n) {
         this.n = n;
-        adj = new int[n][n];    
+        par = new int[n];
+        size = new int[n];
+        for (int i = 0; i < n; i++) {
+            par[i] = i;
+            size[i] = 1;
+        }
     }
-
-    void addEdge(int src,int dest){
-        adj[src][dest] = 1;
-        adj[dest][src] = 1;
-    } 
-    void dfs(int src, boolean[] vis){
-        if(vis[src]) return;
-        vis[src] = true;
-         for (int i = 0; i < n; i++) {
-            if (adj[src][i] == 1 && !vis[i]) {
-                dfs(i, vis);
-            }
-        }     
-    } 
+    int find(int x) {
+        if (par[x] == x)
+            return x;
+        return par[x] = find(par[x]);
+    }
+    void union(int x, int y) {
+        int a = find(x);
+        int b = find(y);
+        if (a == b)
+            return;
+        if (size[a] < size[b]) {
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+        par[b] = a;
+        size[a] += size[b];
+    }
 }
+
 class Solution {
     public int findCircleNum(int[][] isConnected) {
         int n = isConnected.length;
-        Graph g = new Graph(n);
-        boolean[] vis = new boolean[n];
-        for(int i = 0; i < n; i++){
-            for(int j = 0; j < n; j++){
-                if(isConnected[i][j] == 1) g.addEdge(i,j);
-            }
-
-        }
-        int comp = 0;
-        for(int i = 0; i < n ;i++){
-           for(int j = 0; j < n; j++){
-                if(vis[i]) continue;
-                g.dfs(i,vis);
-                comp++;
+        DSU d = new DSU(n);
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (isConnected[i][j] == 1)
+                    d.union(i, j);
             }
         }
-        return comp;
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            if (i == d.find(i))
+                ans++;
+        }
+        return ans;
     }
 }
