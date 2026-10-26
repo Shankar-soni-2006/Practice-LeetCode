@@ -14,5 +14,5 @@ class Solution {
         List<Integer> temp = new ArrayList<>();
         getSubset(0,temp,ans,nums);
         return ans;
-    }
-}
+    }   
+}     
