@@ -1,16 +1,16 @@
 class Solution {
-    public int helper(int[] nums, int idx, int[] dp){
-        
-        if(idx >= nums.length) return 0;
-        if(dp[idx] != -1) return dp[idx];
-        int rob = nums[idx]+helper(nums,idx+2,dp);
-        int notRob = helper(nums,idx+1,dp);
-        dp[idx] = Math.max(rob,notRob);
-        return Math.max(rob,notRob);
-    }
-    public int rob(int[] nums) {
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp,-1);
-        return helper(nums, 0, dp);
+    public int rob(int[] nums){
+        int n = nums.length;
+        if (n == 0) return 0;
+        if (n == 1) return nums[0];
+        int[] dp = new int[n+1];
+        dp[1] = nums[0];
+        dp[2] = Math.max(nums[0], nums[1]);
+        for(int i = 3;i <= n; i++){
+            int rob = nums[i-1] + dp[i-2];
+            int notRob = dp[i-1];
+            dp[i] = Math.max(rob, notRob);
+        }
+        return dp[n];
     }
 }
