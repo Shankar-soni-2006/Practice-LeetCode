@@ -1,21 +1,17 @@
-class Solution { 
-    public int helper(int[] nums, int targetSum, int curr, int idx) {
-        if (idx == nums.length) {
-            return curr == targetSum ? 1 : 0;
-        }
-        int x = helper(nums, targetSum, curr + nums[idx], idx + 1);
-        int y = helper(nums, targetSum, curr, idx + 1);
-        return x+y;
-    } 
-
+class Solution {
     public int findTargetSumWays(int[] nums, int target) {
-        int totalsum = 0;
-        for (int i : nums) totalsum += i;
-        if ((totalsum + target) < 0 || (totalsum + target) % 2 != 0 || Math.abs(target) > totalsum) {
-            return 0; 
+        int sum = 0;
+        for(int x : nums) sum += x;
+        if(sum < Math.abs(target)) return 0;
+        if((sum + target) % 2 != 0) return 0;
+        int tar = (sum + target) /2;
+        int[] dp = new int[tar+1];
+        dp[0] = 1;
+        for(int x : nums){
+            for(int j = tar; j >= x; j--){
+                dp[j] += dp[j-x];
+            }
         }
-        
-        int targetSum = (totalsum + target) / 2;
-        return helper(nums, targetSum, 0, 0);
-    } 
+        return dp[tar];
+    }
 }
