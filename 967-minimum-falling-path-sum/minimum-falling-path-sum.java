@@ -1,24 +1,22 @@
 class Solution {
-    int[][] dp;
-    public int helper(int i, int j, int[][] grid, int m, int n) {
-        if (j < 0 || j >= m) return (int)1e9;
-        if (i == n - 1) return grid[i][j];
-        if (dp[i][j] != (int)1e9) return dp[i][j];
-        int d = helper(i + 1, j - 1, grid, m, n);
-        int r = helper(i + 1, j, grid, m, n);
-        int l = helper(i + 1, j + 1, grid, m, n);
-        return dp[i][j] = grid[i][j] + Math.min(d, Math.min(l, r));
-    }
-
     public int minFallingPathSum(int[][] matrix) {
-        int n = matrix.length, m = matrix[0].length;
-        dp = new int[n][m];
-        for (int[] x : dp) {
-            Arrays.fill(x, (int)1e9);
+        int n = matrix.length;
+        int m = matrix[0].length;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                int mn = matrix[i - 1][j];
+                if (j > 0) {
+                    mn = Math.min(mn, matrix[i - 1][j - 1]);
+                }
+                if (j < m - 1) {
+                    mn = Math.min(mn, matrix[i - 1][j + 1]);
+                }
+                matrix[i][j] += mn;
+            }
         }
         int ans = Integer.MAX_VALUE;
         for (int j = 0; j < m; j++) {
-            ans = Math.min(ans, helper(0, j, matrix, m, n));
+            ans = Math.min(ans, matrix[n - 1][j]);
         }
         return ans;
     }
