@@ -1,11 +1,9 @@
 class Solution {
     int[][] dp;
-
     public int helper(int i, int j, int[][] grid, int m, int n) {
-        if (j < 0 || j >= m) return 100000000;
+        if (j < 0 || j >= m) return (int)1e9;
         if (i == n - 1) return grid[i][j];
-        if (dp[i][j] != 1000000000) return dp[i][j];
-
+        if (dp[i][j] != (int)1e9) return dp[i][j];
         int d = helper(i + 1, j - 1, grid, m, n);
         int r = helper(i + 1, j, grid, m, n);
         int l = helper(i + 1, j + 1, grid, m, n);
@@ -16,7 +14,7 @@ class Solution {
         int n = matrix.length, m = matrix[0].length;
         dp = new int[n][m];
         for (int[] x : dp) {
-            Arrays.fill(x, 1000000000);
+            Arrays.fill(x, (int)1e9);
         }
         int ans = Integer.MAX_VALUE;
         for (int j = 0; j < m; j++) {
