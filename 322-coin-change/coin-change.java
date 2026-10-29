@@ -1,32 +1,24 @@
-class Solution {
+class Solution{
     int[][] dp;
-    public int helper(int[] coins, int amount, int idx) {
-        if (amount < 0) return 100000000; 
-        if (idx == 0) {
-            if (amount % coins[0] == 0) {
-                return amount / coins[0];
-            } else {
-                return 100000000;
-            }
+    public int helper(int[] coins, int amt, int idx){
+        if(amt < 0 ) return (int)1e8;
+        if(idx == 0){
+            if(amt % coins[0] == 0) return amt/ coins[0];
+            else return (int)1e8;
         }
-        if (dp[idx][amount] != -1) return dp[idx][amount]; 
-        int take = 1 + helper(coins, amount - coins[idx], idx);
-        int notTake = helper(coins, amount, idx - 1);
-        return dp[idx][amount] = Math.min(take, notTake);  
+        if(dp[idx][amt] != -1) return dp[idx][amt];
+        int x = 1 + helper(coins, amt - coins[idx], idx);
+        int y = helper(coins, amt, idx-1);
+        return dp[idx][amt] = Math.min(x, y);
     }
 
-    public int coinChange(int[] coins, int amount) {
-        dp = new int[coins.length][amount+1];
-        for(int[] x : dp) Arrays.fill(x,-1);
+    public int coinChange(int[] coins, int amt){
+        dp = new int[coins.length][amt+1];
+        for(int[] x : dp) Arrays.fill(x, -1);
         Arrays.sort(coins);
-        if (amount == 0) {
-            return 0;
-        }
-        int ans = helper(coins, amount, coins.length - 1);
-        if (ans >= 100000000) {
-            return -1;
-        }
-        System.gc();
+        if(amt == 0) return 0;
+        int ans = helper(coins, amt, coins.length-1);
+        if(ans >= (int)1e8) return -1;
         return ans;
     }
 }
