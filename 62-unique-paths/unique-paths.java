@@ -1,6 +1,4 @@
 
-import java.util.Arrays;
-
 class Solution {
     int[][] dp;
     public int helper(int i, int j, int m, int n) {
@@ -19,7 +17,6 @@ class Solution {
     }
     public int uniquePaths(int m, int n) {
         dp = new int[m][n];
-
         for (int k = 0; k < m; k++) {
             Arrays.fill(dp[k], -1);
         }
