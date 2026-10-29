@@ -1,24 +1,21 @@
-class Solution{
-    int[][] dp;
-    public int helper(int[] coins, int amt, int idx){
-        if(amt < 0 ) return (int)1e8;
-        if(idx == 0){
-            if(amt % coins[0] == 0) return amt/ coins[0];
-            else return (int)1e8;
-        }
-        if(dp[idx][amt] != -1) return dp[idx][amt];
-        int x = 1 + helper(coins, amt - coins[idx], idx);
-        int y = helper(coins, amt, idx-1);
-        return dp[idx][amt] = Math.min(x, y);
-    }
-
-    public int coinChange(int[] coins, int amt){
-        dp = new int[coins.length][amt+1];
-        for(int[] x : dp) Arrays.fill(x, -1);
-        Arrays.sort(coins);
+class Solution {
+    public int coinChange(int[] coins, int amt) {
         if(amt == 0) return 0;
-        int ans = helper(coins, amt, coins.length-1);
-        if(ans >= (int)1e8) return -1;
-        return ans;
+        int n = coins.length;
+        int INF = (int)1e8;
+        int[][] dp = new int[n][amt+1];
+        for(int i = 0; i <= amt; i++){
+            if(i % coins[0] == 0) dp[0][i] = i / coins[0];
+            else dp[0][i] = INF;
+        }
+        for(int i = 1; i < n; i++){
+            for(int j = 0; j <= amt; j++){
+                int nt = dp[i-1][j];
+                int t = INF;
+                if(coins[i] <= j) t = 1+ dp[i][j-coins[i]];
+                dp[i][j] = Math.min(nt, t);
+            }
+        }
+        return dp[n-1][amt] >= INF ? -1 : dp[n-1][amt];
     }
 }
