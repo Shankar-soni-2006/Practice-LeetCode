@@ -1,30 +1,27 @@
 class Solution {
-    int[][] dp;
-    boolean isPalindrome(String s, int st, int e) {
-        while(st < e) {
-            if(s.charAt(st) != s.charAt(e)) return false;
-            st++;
-            e--;
+    boolean isPalindrome(String s, int l, int r) {
+        while(l < r) {
+            if(s.charAt(l) != s.charAt(r)) return false;
+            l++;
+            r--;
         }
         return true;
     }
-    int helper(String s, int st, int e) {
-        if(st > e) return 0;
-        if(dp[st][e] != -1) return dp[st][e];
-        int min = Integer.MAX_VALUE;
-        for(int i = st; i <= e; i++) {
-            if(isPalindrome(s, st, i)) {
-                int x = 1 + helper(s, i + 1, e);
-                min = Math.min(min, x);
-            }
-        }
-        return dp[st][e] = min;
-    }
-
     public int minCut(String s) {
         int n = s.length();
-        dp = new int[n][n];
-        for(int[] x : dp) Arrays.fill(x, -1);
-        return helper(s, 0, n - 1) - 1;
+        if(n <= 1) return 0;
+        int[] dp = new int[n + 1];
+        dp[n] = 0;
+        for(int i = n - 1; i >= 0; i--) {
+            int min = Integer.MAX_VALUE;
+            for(int j = i; j < n; j++) {
+                if(isPalindrome(s, i, j)) {
+                    int x = 1 + dp[j + 1];
+                    min = Math.min(min, x);
+                }
+            }
+            dp[i] = min;
+        }
+        return dp[0] - 1;
     }
 }
